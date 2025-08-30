@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FC, createElement } from 'react';
 import {
   Card,
@@ -64,6 +63,7 @@ const NodeWidget = ({ icon, title, subtitle, children }: Props) => (
       >
         {createElement(icon, { fontSize: 'xlarge' })}
       </Box>
+
       <Box textAlign="right">
         <Typography
           color="textSecondary"
@@ -75,6 +75,7 @@ const NodeWidget = ({ icon, title, subtitle, children }: Props) => (
           {subtitle || ' '}
         </Typography>
       </Box>
+      
     </Box>
     {children && <Divider />}
     {children}

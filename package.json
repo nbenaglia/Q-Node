@@ -1,31 +1,45 @@
 {
   "name": "q-nodecontrol",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsc -b && vite build",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "initialize": "node scripts/initialize.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.0",
-    "@mui/icons-material": "7.0.0",
-    "@mui/material": "7.0.0",
-    "@fontsource/lato": "^5.2.5",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "react-icons": "^5.5.0",
-    "react-router": "^7.4.0",
-    "react-router-dom": "^7.4.0",
-    "react-window": "^1.8.11"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.3.1",
+    "@mui/material": "^7.0.1",
+    "i18next": "^25.1.2",
+    "jotai": "^2.12.4",
+    "qapp-core": "^1.0.54",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-i18next": "^15.5.1",
+    "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
-    "@types/react": "19.0.12",
-    "@types/react-dom": "19.0.4",
-    "@vitejs/plugin-react": "4.3.4",
-    "typescript": "5.8.2",
-    "vite": "6.2.3"
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "prettier": "^3.5.3",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.3.5"
   }
 }
