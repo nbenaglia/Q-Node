@@ -1262,7 +1262,7 @@ function App() {
               textDecoration: 'none',
             }}
           >
-            <span style={{ color: '#05a2e4' }}>Qortal </span>Nodecontrol
+            <span style={{ color: '#05a2e4' }}>Qortal </span>Node
           </Typography>
 
           <Typography
