@@ -577,7 +577,7 @@ function App() {
 
       setMintingAccounts(enriched);
     } catch (err) {
-      console.error('sup', err);
+      console.error(err);
     } finally {
       setLoadingMintingAccountsTable(false);
     }
