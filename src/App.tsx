@@ -63,6 +63,7 @@ import {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TIME_MINUTES_1_IN_MILLISECONDS, TIME_MINUTES_2_IN_MILLISECONDS, TIME_MINUTES_5_IN_MILLISECONDS } from './common/constants';
 
 function secondsToDhms(seconds: number) {
   seconds = Number(seconds);
@@ -78,10 +79,6 @@ function secondsToDhms(seconds: number) {
   const sDisplay = s > 0 ? s + (s == 1 ? 's' : 's') : '';
 
   return dDisplay + hDisplay + mDisplay + sDisplay;
-}
-
-function wait(milliseconds: number) {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 function SlideTransition(props: SlideProps) {
@@ -527,7 +524,7 @@ function App() {
 
     fetchNodeData(); // fetch once immediately
 
-    const intervalId = setInterval(fetchNodeData, 60000);
+    const intervalId = setInterval(fetchNodeData, TIME_MINUTES_1_IN_MILLISECONDS);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -553,8 +550,8 @@ function App() {
   }
 
   async function getMintingAccounts() {
-   
     setLoadingMintingAccountsTable(true);
+
     try {
       const list = await qortalRequest({
         action: 'ADMIN_ACTION',
@@ -598,7 +595,7 @@ function App() {
 
     fetchAccounts(); // initial
 
-    const intervalId = setInterval(fetchAccounts, 300000);
+    const intervalId = setInterval(fetchAccounts, TIME_MINUTES_5_IN_MILLISECONDS);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -619,7 +616,7 @@ function App() {
     (async () => {
       connectedPeersInterval = setInterval(async () => {
         await getConnectedPeers();
-      }, 120000);
+      }, TIME_MINUTES_2_IN_MILLISECONDS);
       await getConnectedPeers();
     })();
     return () => {
