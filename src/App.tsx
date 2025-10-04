@@ -553,44 +553,14 @@ function App() {
   }
 
   async function getMintingAccounts() {
+   
     setLoadingMintingAccountsTable(true);
     try {
-      const res = await qortalRequest({
+      const list = await qortalRequest({
         action: 'ADMIN_ACTION',
         type: 'getmintingaccounts',
       });
-
-      const contentType = res.headers.get('content-type') || '';
-      const bodyText = await res.text();
-
-      JSON.stringify(res);
-
-      if (!res.ok) {
-        throw new Error(
-          `GET /admin/mintingaccounts failed ${res.status} ${res.statusText}. ` +
-            `CT=${contentType}. Body: ${bodyText.slice(0, 200)}`
-        );
-      }
-
-      let list: Array<{
-        mintingAccount: string;
-        publicKey: string;
-        recipientAccount: string;
-      }>;
-
-      try {
-        list = JSON.parse(bodyText);
-      } catch {
-        throw new Error(
-          `Expected JSON but got ${contentType || 'unknown'}. ` +
-            `First chars: ${bodyText.slice(0, 120)}`
-        );
-      }
-
-      if (!Array.isArray(list)) {
-        throw new Error('Response is not an array.');
-      }
-
+      
       // Enrich in parallel and WAIT for them
       const enriched = await Promise.all(
         list.map(async (item) => {
@@ -607,7 +577,7 @@ function App() {
 
       setMintingAccounts(enriched);
     } catch (err) {
-      console.error(err);
+      console.error('sup', err);
     } finally {
       setLoadingMintingAccountsTable(false);
     }
