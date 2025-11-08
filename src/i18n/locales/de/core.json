@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "Geben Sie einen Peer an mit hostname, [IPv4]-Adresse, [IPv6]-Adresse und optionaler Portnummer, vorangestellt durch einen Doppelpunkt.",
       "add_minting_account": "Bitte geben Sie den Minting-Schlüssel ein, der zu diesem Node hinzugefügt werden soll.",
+      "all_rows": "alle",
       "connected_peers": "Mit diesem Node verbundene Peers ({{ count }})",
       "loading_minting_accounts": "Minting-Konten werden geladen, bitte warten...",
       "minting_account": "Minting-Konto(s)",

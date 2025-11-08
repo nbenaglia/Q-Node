@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "Määra peer kasutades hostname’i, [IPv4] aadressi, [IPv6] aadressi ja valikulist pordinumbrit, millele eelneb koolon.",
       "add_minting_account": "Palun sisestage mintimise võti, et see lisada sellesse node’i.",
+      "all_rows": "kõik",
       "connected_peers": "Selle node’iga ühendatud peerid ({{ count }})",
       "loading_minting_accounts": "Mintimise kontode laadimine, palun oodake...",
       "minting_account": "Mintimise konto(d)",

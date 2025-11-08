@@ -1,6 +1,7 @@
 import { GlobalProvider } from 'qapp-core';
 import Layout from './styles/Layout';
 import { publicSalt } from './qapp-config';
+import { TIME_MINUTES_3_IN_MILLISECONDS } from './common/constants';
 
 export const AppWrapper = () => {
 
@@ -10,7 +11,7 @@ export const AppWrapper = () => {
         appName: 'Q-Node',
         auth: {
           balanceSetting: {
-            interval: 180000,
+            interval: TIME_MINUTES_3_IN_MILLISECONDS,
             onlyOnMount: false,
           },
           authenticateOnMount: true,
