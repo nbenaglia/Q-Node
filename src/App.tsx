@@ -64,9 +64,10 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  EMPTY_STRING,
   TIME_MINUTES_1_IN_MILLISECONDS,
   TIME_MINUTES_2_IN_MILLISECONDS,
-  TIME_SECONDS_6_IN_MILLISECONDS
+  TIME_SECONDS_6_IN_MILLISECONDS,
 } from './common/constants';
 
 function secondsToDhms(seconds: number) {
@@ -204,9 +205,9 @@ function App() {
   const [nodeData, setNodeData] = useState<any>(null);
   const [mintingAccounts, setMintingAccounts] = useState<any>([]);
   const [connectedPeers, setConnectedPeers] = useState<any>([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(EMPTY_STRING);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState(EMPTY_STRING);
   const [successSnackbar, setSuccessSnackbar] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -214,9 +215,9 @@ function App() {
     useState(true);
   const [openMintingAccountDialog, setOpenMintingAccountDialog] =
     useState(false);
-  const [mintingAccountKey, setMintingAccountKey] = useState('');
+  const [mintingAccountKey, setMintingAccountKey] = useState(EMPTY_STRING);
   const [openPeerDialog, setOpenPeerDialog] = useState(false);
-  const [newPeerAddress, setNewPeerAddress] = useState('');
+  const [newPeerAddress, setNewPeerAddress] = useState(EMPTY_STRING);
 
   const emptyRows =
     page > 0
@@ -231,7 +232,7 @@ function App() {
       return;
     }
     setSuccessSnackbar(false);
-    setSuccessMessage('');
+    setSuccessMessage(EMPTY_STRING);
   }
 
   function handleCloseErrorSnackbar(
@@ -242,16 +243,16 @@ function App() {
       return;
     }
     setErrorSnackbar(false);
-    setErrorMessage('');
+    setErrorMessage(EMPTY_STRING);
   }
 
   function handleCloseAddMintingAccountDialog() {
-    setMintingAccountKey('');
+    setMintingAccountKey(EMPTY_STRING);
     setOpenMintingAccountDialog(false);
   }
 
   function handleCloseAddPeerDialog() {
-    setNewPeerAddress('');
+    setNewPeerAddress(EMPTY_STRING);
     setOpenPeerDialog(false);
   }
 
@@ -267,13 +268,13 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     }
@@ -291,13 +292,13 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     }
@@ -315,13 +316,13 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     }
@@ -340,21 +341,21 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
         setOpenMintingAccountDialog(false);
         getMintingAccounts();
-        setMintingAccountKey('');
+        setMintingAccountKey(EMPTY_STRING);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
       setOpenMintingAccountDialog(false);
       getMintingAccounts();
-      setMintingAccountKey('');
+      setMintingAccountKey(EMPTY_STRING);
     }
   }
 
@@ -371,14 +372,14 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
         getMintingAccounts();
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
       getMintingAccounts();
@@ -398,21 +399,21 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
         setOpenPeerDialog(false);
         getConnectedPeers();
-        setNewPeerAddress('');
+        setNewPeerAddress(EMPTY_STRING);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
       setOpenPeerDialog(false);
       getConnectedPeers();
-      setNewPeerAddress('');
+      setNewPeerAddress(EMPTY_STRING);
     }
   }
 
@@ -429,14 +430,14 @@ function App() {
             postProcess: 'capitalizeFirstChar',
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
         getConnectedPeers();
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
       getConnectedPeers();
@@ -457,13 +458,13 @@ function App() {
             address: peerAddress,
           })
         );
-        setErrorMessage('');
+        setErrorMessage(EMPTY_STRING);
         setErrorSnackbar(false);
         setSuccessSnackbar(true);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      setSuccessMessage('');
+      setSuccessMessage(EMPTY_STRING);
       setSuccessSnackbar(false);
       setErrorSnackbar(true);
     }
@@ -984,7 +985,20 @@ function App() {
             <TableFooter sx={{ width: '100%' }}>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  labelRowsPerPage={t('core:message.generic.rows_per_page', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                  rowsPerPageOptions={[
+                    5,
+                    10,
+                    25,
+                    {
+                      label: t('core:message.generic.all_rows', {
+                        postProcess: 'capitalizeFirstChar',
+                      }),
+                      value: -1,
+                    },
+                  ]}
                   colSpan={6}
                   count={connectedPeers.length}
                   rowsPerPage={rowsPerPage}
@@ -992,9 +1006,7 @@ function App() {
                   slotProps={{
                     select: {
                       inputProps: {
-                        'aria-label': t('core:message.generic.rows_per_page', {
-                          postProcess: 'capitalizeFirstChar',
-                        }),
+                        'aria-label': 'rows per page',
                       },
                       native: true,
                     },
@@ -1098,13 +1110,17 @@ function App() {
         </DialogContent>
 
         <DialogActions>
-          <Button variant='contained' color="error" onClick={handleCloseAddMintingAccountDialog}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleCloseAddMintingAccountDialog}
+          >
             {t('core:action.cancel', {
               postProcess: 'capitalizeFirstChar',
             })}
           </Button>
           <Button
-            variant='contained'
+            variant="contained"
             color="success"
             onClick={() => {
               handleAddMintingAccount(mintingAccountKey);

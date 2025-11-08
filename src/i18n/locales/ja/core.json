@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "ホスト名、[IPv4] アドレス、[IPv6] アドレス、そしてオプションでコロンの後にポート番号を指定してピアを指定してください。",
       "add_minting_account": "このノードに追加するマイニングキーを入力してください。",
+      "all_rows": "すべて",
       "connected_peers": "このノードに接続されているピア ({{ count }})",
       "loading_minting_accounts": "マイニングアカウントを読み込み中です。しばらくお待ちください...",
       "minting_account": "マイニングアカウント",

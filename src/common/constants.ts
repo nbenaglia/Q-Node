@@ -1,3 +1,6 @@
+// String section 
+export const EMPTY_STRING: string ='';
+
 // Time section
 export const TIME_SECONDS_1_IN_MILLISECONDS: number = 1000;
 export const TIME_SECONDS_4_IN_MILLISECONDS: number = 4 * TIME_SECONDS_1_IN_MILLISECONDS;

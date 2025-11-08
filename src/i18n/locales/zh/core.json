@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "请指定一个节点，使用 hostname、[IPv4] 地址、[IPv6] 地址，以及可选的端口号（前面加上冒号）。",
       "add_minting_account": "请输入要添加到该节点的铸造密钥。",
+      "all_rows": "全部",
       "connected_peers": "连接到该节点的节点 ({{ count }})",
       "loading_minting_accounts": "正在加载铸造账户，请稍候...",
       "minting_account": "铸造账户",

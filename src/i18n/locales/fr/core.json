@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "Spécifiez un pair en utilisant hostname, une adresse [IPv4], une adresse [IPv6] et un numéro de port optionnel précédé de deux-points.",
       "add_minting_account": "Veuillez entrer la clé de minage à ajouter à ce nœud.",
+      "all_rows": "toutes",
       "connected_peers": "Pairs connectés à ce nœud ({{ count }})",
       "loading_minting_accounts": "Chargement des comptes de minage, veuillez patienter...",
       "minting_account": "Compte(s) de minage",

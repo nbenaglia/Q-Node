@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "specifica un peer utilizzando hostname, indirizzo IPv4, indirizzo IPv6 e numero di porta opzionale preceduto da due punti.",
       "add_minting_account": "inserisci la chiave di minting da aggiungere a questo nodo.",
+      "all_rows": "tutte",
       "connected_peers": "peer connessi a questo nodo ({{ count }})",
       "loading_minting_accounts": "Caricamento degli account di minting, attendere...",
       "minting_account": "account di minting",

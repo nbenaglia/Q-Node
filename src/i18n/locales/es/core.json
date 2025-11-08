@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "Especifique un peer usando hostname, dirección [IPv4], dirección [IPv6] y número de puerto opcional precedido por dos puntos.",
       "add_minting_account": "Por favor, introduzca la clave de minteo para añadirla a este nodo.",
+      "all_rows": "todas",
       "connected_peers": "Peers conectados a este nodo ({{ count }})",
       "loading_minting_accounts": "Cargando cuentas de minteo, por favor espere...",
       "minting_account": "Cuenta(s) de minteo",

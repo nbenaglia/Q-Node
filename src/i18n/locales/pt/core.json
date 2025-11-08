@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "Especifique um peer usando hostname, endereço [IPv4], endereço [IPv6] e número de porta opcional precedido por dois pontos.",
       "add_minting_account": "Por favor, insira a chave de mineração para adicioná-la a este nó.",
+      "all_rows": "todas",
       "connected_peers": "Peers conectados a este nó ({{ count }})",
       "loading_minting_accounts": "Carregando contas de mineração, por favor aguarde...",
       "minting_account": "Conta(s) de mineração",

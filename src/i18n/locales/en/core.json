@@ -11,6 +11,7 @@
     "generic": {
       "add_peer": "specify a peer using hostname, IPv4 address, IPv6 address and optional port number preceeded with colon.",
       "add_minting_account": "please enter the minting key to be added to this node.",
+      "all_rows": "all",
       "connected_peers": "peers connected to this node ({{ count }})",
       "loading_minting_accounts": "Loading Minting Accounts, please wait...",
       "minting_account": "minting account(s)",
