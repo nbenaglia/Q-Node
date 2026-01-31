@@ -1,6 +1,7 @@
 {
   "action": {
     "add": "追加",
+    "add_data_peer": "データピアを追加",
     "add_peer": "新しいピアを追加",
     "add_minting_account": "マイニングアカウントを追加",
     "cancel": "キャンセル",
@@ -18,13 +19,16 @@
       "minting_key": "マイニングキー",
       "minting_key_helper": "44文字のマイニングキー",
       "no_minting_accounts": "このノードにマイニングアカウントが見つかりません",
+      "no_data_peers": "このノードにはデータピアがありません",
       "no_peers": "このノードには接続されているピアがありません",
       "rows_per_page": "ページごとの行数",
       "starting_sync_peer": "ピアとの同期を開始: {{ address }}",
       "success": {
         "bootstrap_request": "このノードへのブートストラップリクエストを正常に送信しました！最大10分かかる場合があります...",
         "new_minting_account": "マイニングアカウントを正常に追加しました",
+        "new_data_peer": "データピアを正常に追加しました",
         "new_peer": "新しいピアを正常に追加しました",
+        "remove_data_peer": "データピアを正常に削除しました",
         "remove_minting_account": "マイニングアカウントを正常に削除しました",
         "remove_peer": "ピアを正常に削除しました",
         "restart_request": "このノードへの再起動リクエストを正常に送信しました！最大5分かかる場合があります...",

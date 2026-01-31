@@ -1,6 +1,7 @@
 {
   "action": {
     "add": "Hinzufügen",
+    "add_data_peer": "Daten-Peer hinzufügen",
     "add_peer": "Neuen Peer hinzufügen",
     "add_minting_account": "Minting-Konto hinzufügen",
     "cancel": "Abbrechen",
@@ -18,13 +19,16 @@
       "minting_key": "Minting-Schlüssel",
       "minting_key_helper": "Minting-Schlüssel mit 44 Zeichen",
       "no_minting_accounts": "Keine Minting-Konten für diesen Node gefunden",
+      "no_data_peers": "Dieser Node hat keine Daten-Peers",
       "no_peers": "Dieser Node hat keine verbundenen Peers",
       "rows_per_page": "Zeilen pro Seite",
       "starting_sync_peer": "Starte Synchronisation mit Peer: {{ address }}",
       "success": {
         "bootstrap_request": "Bootstrap-Anfrage erfolgreich an diesen Node gesendet! Dies kann bis zu 10 Minuten dauern...",
         "new_minting_account": "Minting-Konto erfolgreich hinzugefügt",
+        "new_data_peer": "Daten-Peer erfolgreich hinzugefügt",
         "new_peer": "Neuer Peer erfolgreich hinzugefügt",
+        "remove_data_peer": "Daten-Peer erfolgreich entfernt",
         "remove_minting_account": "Minting-Konto erfolgreich entfernt",
         "remove_peer": "Peer erfolgreich entfernt",
         "restart_request": "Neustart-Anfrage erfolgreich an diesen Node gesendet! Dies kann bis zu 5 Minuten dauern...",

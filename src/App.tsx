@@ -218,11 +218,21 @@ function App() {
   const [mintingAccountKey, setMintingAccountKey] = useState(EMPTY_STRING);
   const [openPeerDialog, setOpenPeerDialog] = useState(false);
   const [newPeerAddress, setNewPeerAddress] = useState(EMPTY_STRING);
+  const [connectedDataPeers, setConnectedDataPeers] = useState<any>([]);
+  const [openDataPeerDialog, setOpenDataPeerDialog] = useState(false);
+  const [newDataPeerAddress, setNewDataPeerAddress] = useState(EMPTY_STRING);
+  const [dataPeerPage, setDataPeerPage] = useState(0);
+  const [dataRowsPerPage, setDataRowsPerPage] = useState(5);
 
   const emptyRows =
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - connectedPeers.length)
       : 0;
+
+  const emptyDataRows = Math.max(
+    0,
+    (1 + dataPeerPage) * dataRowsPerPage - connectedDataPeers.length
+  );
 
   function handleCloseSuccessSnackbar(
     _event?: SyntheticEvent | Event,
@@ -254,6 +264,11 @@ function App() {
   function handleCloseAddPeerDialog() {
     setNewPeerAddress(EMPTY_STRING);
     setOpenPeerDialog(false);
+  }
+
+  function handleCloseAddDataPeerDialog() {
+    setNewDataPeerAddress(EMPTY_STRING);
+    setOpenDataPeerDialog(false);
   }
 
   async function handleRestartNode() {
@@ -470,11 +485,90 @@ function App() {
     }
   }
 
+  async function getConnectedDataPeers() {
+    const dataPeersLink = `/peers/data`;
+    const res = await fetch(dataPeersLink);
+    const data = await res.json();
+    setConnectedDataPeers(Array.isArray(data) ? data : []);
+  }
+
+  async function handleAddDataPeer(peerAddress: string) {
+    try {
+      const response = await qortalRequest({
+        action: 'ADMIN_ACTION',
+        type: 'adddatapeer',
+        value: peerAddress,
+      });
+      if (!response?.error) {
+        setSuccessMessage(
+          t('core:message.generic.success.new_data_peer', {
+            postProcess: 'capitalizeFirstChar',
+          })
+        );
+        setErrorMessage(EMPTY_STRING);
+        setErrorSnackbar(false);
+        setSuccessSnackbar(true);
+        setOpenDataPeerDialog(false);
+        getConnectedDataPeers();
+        setNewDataPeerAddress(EMPTY_STRING);
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setSuccessMessage(EMPTY_STRING);
+      setSuccessSnackbar(false);
+      setErrorSnackbar(true);
+      setOpenDataPeerDialog(false);
+      getConnectedDataPeers();
+      setNewDataPeerAddress(EMPTY_STRING);
+    }
+  }
+
+  async function handleRemoveDataPeer(peerAddress: string) {
+    try {
+      const response = await qortalRequest({
+        action: 'ADMIN_ACTION',
+        type: 'removedatapeer',
+        value: peerAddress,
+      });
+      if (!response?.error) {
+        setSuccessMessage(
+          t('core:message.generic.success.remove_data_peer', {
+            postProcess: 'capitalizeFirstChar',
+          })
+        );
+        setErrorMessage(EMPTY_STRING);
+        setErrorSnackbar(false);
+        setSuccessSnackbar(true);
+        getConnectedDataPeers();
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setSuccessMessage(EMPTY_STRING);
+      setSuccessSnackbar(false);
+      setErrorSnackbar(true);
+      getConnectedDataPeers();
+    }
+  }
+
   function handleChangePage(
     _event: MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) {
     setPage(newPage);
+  }
+
+  function handleChangeDataPeerPage(
+    _event: MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) {
+    setDataPeerPage(newPage);
+  }
+
+  function handleChangeDataRowsPerPage(event: ChangeEvent<HTMLInputElement>) {
+    setDataRowsPerPage(
+      event.target.value === '-1' ? 999999 : parseInt(event.target.value, 10)
+    );
+    setDataPeerPage(0);
   }
 
   function handleChangeRowsPerPage(
@@ -626,6 +720,19 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    let dataPeersInterval: number | undefined;
+    (async () => {
+      dataPeersInterval = setInterval(async () => {
+        await getConnectedDataPeers();
+      }, TIME_MINUTES_2_IN_MILLISECONDS);
+      await getConnectedDataPeers();
+    })();
+    return () => {
+      clearInterval(dataPeersInterval);
+    };
+  }, []);
+
   const nodeButtons = () => {
     return (
       <Box
@@ -727,6 +834,41 @@ function App() {
           style={{ borderRadius: 50 }}
         >
           {t('core:action.add_peer', {
+            postProcess: 'capitalizeFirstChar',
+          })}
+        </Button>
+      </Box>
+    );
+  };
+
+  const dataPeersHeader = () => {
+    return (
+      <Box
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}
+      >
+        <Typography variant="h6">
+          {t('core:message.generic.connected_data_peers', {
+            postProcess: 'capitalizeFirstChar',
+            count: connectedDataPeers.length,
+          })}
+        </Typography>
+        <Button
+          disabled={isUsingGateway}
+          size="small"
+          onClick={() => {
+            setOpenDataPeerDialog(true);
+          }}
+          startIcon={<AddBoxOutlined />}
+          variant="outlined"
+          style={{ borderRadius: 50 }}
+        >
+          {t('core:action.add_data_peer', {
             postProcess: 'capitalizeFirstChar',
           })}
         </Button>
@@ -1035,6 +1177,166 @@ function App() {
     }
   };
 
+  const tableDataPeers = () => {
+    if (connectedDataPeers && connectedDataPeers.length > 0) {
+      return (
+        <TableContainer component={Paper}>
+          <Table
+            stickyHeader
+            sx={{ width: '100%' }}
+            aria-label="data-peers-table"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">
+                  {t('core:table_headers.peers.address', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {t('core:table_headers.peers.handshake_status', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {t('core:table_headers.peers.core_version', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {t('core:table_headers.peers.connected_since', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {t('core:table_headers.peers.actions', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {(dataRowsPerPage > 0
+                ? connectedDataPeers.slice(
+                    dataPeerPage * dataRowsPerPage,
+                    dataPeerPage * dataRowsPerPage + dataRowsPerPage
+                  )
+                : connectedDataPeers
+              ).map(
+                (
+                  row: {
+                    address?: string;
+                    handshakeStatus?: string;
+                    version?: string;
+                    age?: string;
+                  },
+                  i: Key
+                ) => (
+                  <StyledTableRow key={i}>
+                    <StyledTableCell style={{ width: 'auto' }} align="left">
+                      {row?.address ?? ''}
+                    </StyledTableCell>
+
+                    <StyledTableCell style={{ width: 'auto' }} align="left">
+                      <Box
+                        sx={{
+                          color:
+                            row?.handshakeStatus === 'COMPLETED'
+                              ? theme.palette.success.main
+                              : theme.palette.error.main,
+                        }}
+                      >
+                        {row?.handshakeStatus ?? ''}
+                      </Box>
+                    </StyledTableCell>
+
+                    <StyledTableCell style={{ width: 'auto' }} align="left">
+                      {row?.version ? row.version.replace('qortal-', 'v') : ''}
+                    </StyledTableCell>
+
+                    <StyledTableCell style={{ width: 'auto' }} align="left">
+                      {row?.age ?? ''}
+                    </StyledTableCell>
+
+                    <StyledTableCell style={{ width: 'auto' }} align="left">
+                      <Button
+                        disabled={isUsingGateway}
+                        size="small"
+                        color="error"
+                        startIcon={<RemoveCircleOutline />}
+                        onClick={() => {
+                          handleRemoveDataPeer(row?.address ?? '');
+                        }}
+                      >
+                        {t('core:action.remove', {
+                          postProcess: 'capitalizeFirstChar',
+                        })}
+                      </Button>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                )
+              )}
+              {emptyDataRows > 0 && (
+                <TableRow style={{ height: 53 * emptyDataRows }}>
+                  <TableCell colSpan={5} />
+                </TableRow>
+              )}
+            </TableBody>
+
+            <TableFooter sx={{ width: '100%' }}>
+              <TableRow>
+                <TablePagination
+                  labelRowsPerPage={t('core:message.generic.rows_per_page', {
+                    postProcess: 'capitalizeFirstChar',
+                  })}
+                  rowsPerPageOptions={[
+                    5,
+                    10,
+                    25,
+                    {
+                      label: t('core:message.generic.all_rows', {
+                        postProcess: 'capitalizeFirstChar',
+                      }),
+                      value: -1,
+                    },
+                  ]}
+                  colSpan={5}
+                  count={connectedDataPeers.length}
+                  rowsPerPage={dataRowsPerPage}
+                  page={dataPeerPage}
+                  slotProps={{
+                    select: {
+                      inputProps: {
+                        'aria-label': 'rows per page',
+                      },
+                      native: true,
+                    },
+                  }}
+                  onPageChange={handleChangeDataPeerPage}
+                  onRowsPerPageChange={handleChangeDataRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      );
+    } else {
+      return (
+        <Typography
+          variant="h5"
+          align="center"
+          sx={{ color: theme.palette.text.primary, fontWeight: 700 }}
+        >
+          {t('core:message.generic.no_data_peers', {
+            postProcess: 'capitalizeFirstChar',
+          })}
+        </Typography>
+      );
+    }
+  };
+
   const tableLoaderMintingAccounts = () => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -1188,10 +1490,64 @@ function App() {
     );
   };
 
+  const addDataPeerDialog = () => {
+    return (
+      <DialogGeneral
+        maxWidth="md"
+        aria-labelledby="add-data-peer"
+        open={openDataPeerDialog}
+        keepMounted={false}
+      >
+        <DialogTitle>
+          {t('core:action.add_data_peer', {
+            postProcess: 'capitalizeFirstChar',
+          })}
+        </DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            {t('core:message.generic.add_data_peer', {
+              postProcess: 'capitalizeFirstChar',
+            })}
+          </DialogContentText>
+          <TextField
+            required
+            label="PEER ADDRESS"
+            id="data-peer-address"
+            margin="normal"
+            value={newDataPeerAddress}
+            onChange={(e: { target: { value: SetStateAction<string> } }) =>
+              setNewDataPeerAddress(e.target.value)
+            }
+          />
+        </DialogContent>
+
+        <DialogActions>
+          <Button color="error" onClick={handleCloseAddDataPeerDialog}>
+            {t('core:action.cancel', {
+              postProcess: 'capitalizeFirstChar',
+            })}
+          </Button>
+          <Button
+            color="success"
+            onClick={() => {
+              handleAddDataPeer(newDataPeerAddress);
+            }}
+          >
+            {t('core:action.add', {
+              postProcess: 'capitalizeFirstChar',
+            })}
+          </Button>
+        </DialogActions>
+      </DialogGeneral>
+    );
+  };
+
   return (
     <Container maxWidth="xl">
       {addMintingAccountDialog()}
       {addPeerDialog()}
+      {addDataPeerDialog()}
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={successSnackbar}
@@ -1397,6 +1753,16 @@ function App() {
 
       <Box maxWidth="xl" marginTop={2}>
         {tableConnectedPeers()}
+      </Box>
+
+      <Box maxWidth="xl" marginTop={4}>
+        {dataPeersHeader()}
+      </Box>
+
+      <Divider sx={{ marginTop: '5px' }} />
+
+      <Box maxWidth="xl" marginTop={2}>
+        {tableDataPeers()}
       </Box>
     </Container>
   );
