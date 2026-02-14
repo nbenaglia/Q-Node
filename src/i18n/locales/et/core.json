@@ -66,6 +66,7 @@
   },
   "widgets": {
     "block_height": "Bloki kõrgus",
+    "connected_data_peers": "ühendatud QDN andmepeerid",
     "connected_peers": "Ühendatud peerid",
     "core_version": "Tuumaversioon",
     "minting_status": "Mintimise staatus",

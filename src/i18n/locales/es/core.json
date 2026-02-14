@@ -65,6 +65,7 @@
   },
   "widgets": {
     "block_height": "Altura del bloque",
+    "connected_data_peers": "peers de datos QDN conectados",
     "connected_peers": "Peers conectados",
     "core_version": "Versión del núcleo",
     "minting_status": "Estado de minteo",

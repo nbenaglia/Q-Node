@@ -64,6 +64,7 @@
   },
   "widgets": {
     "block_height": "Blockhöhe",
+    "connected_data_peers": "verbundene QDN-Daten-Peers",
     "connected_peers": "Verbundene Peers",
     "core_version": "Core-Version",
     "minting_status": "Minting-Status",

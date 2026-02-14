@@ -64,6 +64,7 @@
   },
   "widgets": {
     "block_height": "Altura do bloco",
+    "connected_data_peers": "peers de dados QDN conectados",
     "connected_peers": "Peers conectados",
     "core_version": "Versão do núcleo",
     "minting_status": "Status da mineração",

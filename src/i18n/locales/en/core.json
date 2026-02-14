@@ -66,6 +66,7 @@
   },
   "widgets": {
     "block_height": "block height",
+    "connected_data_peers": "connected QDN peers",
     "connected_peers": "connected peers",
     "core_version": "core version",
     "minting_status": "minting status",

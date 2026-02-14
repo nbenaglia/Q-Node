@@ -1,7 +1,7 @@
 {
   "name": "Q-Node",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "scripts": {
     "build": "tsc -b --noEmit && vite build",
@@ -24,6 +24,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.5.1",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {

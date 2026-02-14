@@ -66,6 +66,7 @@
   },
   "widgets": {
     "block_height": "区块高度",
+    "connected_data_peers": "已连接的QDN数据节点",
     "connected_peers": "已连接节点",
     "core_version": "核心版本",
     "minting_status": "铸造状态",

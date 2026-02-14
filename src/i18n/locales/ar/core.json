@@ -66,6 +66,7 @@
   },
   "widgets": {
     "block_height": "ارتفاع الكتلة",
+    "connected_data_peers": "أقران بيانات QDN المتصلون",
     "connected_peers": "الأقران المتصلون",
     "core_version": "إصدار النواة",
     "minting_status": "حالة التعدين",

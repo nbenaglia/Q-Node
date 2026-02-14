@@ -15,6 +15,7 @@ import {
   Divider,
   Grid,
   IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -45,12 +46,16 @@ import {
   RestartAlt,
   Storage,
   Sync,
+  Close,
   SyncLock,
 } from '@mui/icons-material';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 import Slide, { SlideProps } from '@mui/material/Slide';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import changelogContent from '../CHANGELOG.md?raw';
+import Markdown from 'react-markdown';
 import appLogo from './assets/Q-Node.png';
+import packageJson from '../package.json';
 import noAvatar from './assets/noavatar.png';
 import NodeWidget from './components/NodeWidget';
 import { useTheme } from '@mui/material/styles';
@@ -220,6 +225,7 @@ function App() {
   const [mintingAccounts, setMintingAccounts] = useState<any>([]);
   const [connectedPeers, setConnectedPeers] = useState<any>([]);
   const [errorMessage, setErrorMessage] = useState(EMPTY_STRING);
+  const [changelogOpen, setChangelogOpen] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successMessage, setSuccessMessage] = useState(EMPTY_STRING);
   const isFetchingAccounts = useRef(false);
@@ -237,18 +243,17 @@ function App() {
   const [openDataPeerDialog, setOpenDataPeerDialog] = useState(false);
   const [newDataPeerAddress, setNewDataPeerAddress] = useState(EMPTY_STRING);
   const [dataPeerPage, setDataPeerPage] = useState(0);
-  const [dataRowsPerPage, setDataRowsPerPage] = useAtom(dataPeersRowsPerPageAtom);
+  const [dataRowsPerPage, setDataRowsPerPage] = useAtom(
+    dataPeersRowsPerPageAtom
+  );
 
   const emptyRows =
-    rowsPerPage > 0 &&
-    rowsPerPage < connectedPeers.length &&
-    page > 0
+    rowsPerPage > 0 && rowsPerPage < connectedPeers.length && page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - connectedPeers.length)
       : 0;
 
   const emptyDataRows =
-    dataRowsPerPage > 0 &&
-    dataRowsPerPage < connectedDataPeers.length
+    dataRowsPerPage > 0 && dataRowsPerPage < connectedDataPeers.length
       ? Math.max(
           0,
           (1 + dataPeerPage) * dataRowsPerPage - connectedDataPeers.length
@@ -844,7 +849,11 @@ function App() {
           })}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <Tooltip title={t('core:action.refresh', { postProcess: 'capitalizeFirstChar' })}>
+          <Tooltip
+            title={t('core:action.refresh', {
+              postProcess: 'capitalizeFirstChar',
+            })}
+          >
             <IconButton
               disabled={isUsingGateway}
               size="small"
@@ -891,7 +900,11 @@ function App() {
           })}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <Tooltip title={t('core:action.refresh', { postProcess: 'capitalizeFirstChar' })}>
+          <Tooltip
+            title={t('core:action.refresh', {
+              postProcess: 'capitalizeFirstChar',
+            })}
+          >
             <IconButton
               disabled={isUsingGateway}
               size="small"
@@ -1366,7 +1379,9 @@ function App() {
                   ]}
                   colSpan={5}
                   count={connectedDataPeers.length}
-                  rowsPerPage={dataRowsPerPage === 999999 ? -1 : dataRowsPerPage}
+                  rowsPerPage={
+                    dataRowsPerPage === 999999 ? -1 : dataRowsPerPage
+                  }
                   page={dataPeerPage}
                   slotProps={{
                     select: {
@@ -1667,7 +1682,19 @@ function App() {
               textDecoration: 'none',
             }}
           >
-            <span style={{ color: '#05a2e4' }}>Qortal </span>Node
+            <Box sx={{ display: 'inline-flex', alignItems: 'baseline', gap: 1 }}>
+              <span>
+                <span style={{ color: '#05a2e4' }}>Qortal </span>Node
+              </span>
+              <Link
+                component="button"
+                variant="caption"
+                onClick={() => setChangelogOpen(true)}
+                sx={{ fontSize: 10, cursor: 'pointer', color: 'text.secondary' }}
+              >
+                v{packageJson.version}
+              </Link>
+            </Box>
           </Typography>
 
           <Typography
@@ -1689,7 +1716,19 @@ function App() {
               textDecoration: 'none',
             }}
           >
-            <span style={{ color: '#05a2e4' }}>Q</span>NC
+            <Box sx={{ display: 'inline-flex', alignItems: 'baseline', gap: 1 }}>
+              <span>
+                <span style={{ color: '#05a2e4' }}>Q</span>NC
+              </span>
+              <Link
+                component="button"
+                variant="caption"
+                onClick={() => setChangelogOpen(true)}
+                sx={{ fontSize: 10, cursor: 'pointer', color: 'text.secondary' }}
+              >
+                v{packageJson.version}
+              </Link>
+            </Box>
           </Typography>
           {isUsingGateway ? '' : nodeButtons()}
         </Toolbar>
@@ -1703,21 +1742,11 @@ function App() {
       >
         <Box>
           <NodeWidget
-            icon={GridView}
-            title={t('core:widgets.block_height', {
+            icon={AltRoute}
+            title={t('core:widgets.core_version', {
               postProcess: 'capitalizeAll',
             })}
-            subtitle={nodeData?.height}
-          />
-        </Box>
-
-        <Box>
-          <NodeWidget
-            icon={Hub}
-            title={t('core:widgets.connected_peers', {
-              postProcess: 'capitalizeAll',
-            })}
-            subtitle={nodeData?.numberOfConnections}
+            subtitle={nodeData?.buildVersion.replace('qortal-', 'v')}
           />
         </Box>
 
@@ -1733,11 +1762,31 @@ function App() {
 
         <Box>
           <NodeWidget
-            icon={AltRoute}
-            title={t('core:widgets.core_version', {
+            icon={Hub}
+            title={t('core:widgets.connected_peers', {
               postProcess: 'capitalizeAll',
             })}
-            subtitle={nodeData?.buildVersion.replace('qortal-', 'v')}
+            subtitle={nodeData?.numberOfConnections}
+          />
+        </Box>
+
+        <Box>
+          <NodeWidget
+            icon={Hub}
+            title={t('core:widgets.connected_data_peers', {
+              postProcess: 'capitalizeAll',
+            })}
+            subtitle={nodeData?.numberOfDataConnections}
+          />
+        </Box>
+
+        <Box>
+          <NodeWidget
+            icon={GridView}
+            title={t('core:widgets.block_height', {
+              postProcess: 'capitalizeAll',
+            })}
+            subtitle={nodeData?.height}
           />
         </Box>
 
@@ -1827,6 +1876,56 @@ function App() {
       <Box maxWidth="xl" marginTop={2}>
         {tableDataPeers()}
       </Box>
+      <Dialog
+        open={changelogOpen}
+        onClose={() => setChangelogOpen(false)}
+        maxWidth="md"
+        fullWidth
+        slotProps={{ paper: { sx: { maxHeight: '80vh' } } }}
+      >
+        <DialogTitle sx={{ textAlign: 'center', position: 'relative' }}>
+          CHANGELOG
+          <IconButton
+            onClick={() => setChangelogOpen(false)}
+            size="small"
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: '50%',
+              transform: 'translateY(-50%)',
+            }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          <Box
+            sx={{
+              '& h1': { fontSize: '1.5rem', fontWeight: 600, mb: 2, mt: 0 },
+              '& h2': {
+                fontSize: '1.2rem',
+                fontWeight: 600,
+                mb: 1,
+                mt: 3,
+                color: 'primary.main',
+              },
+              '& h3': { fontSize: '1rem', fontWeight: 600, mb: 1, mt: 2 },
+              '& ul': { pl: 2, mb: 1 },
+              '& li': { mb: 0.5, fontSize: 14 },
+              '& p': { mb: 1, fontSize: 14 },
+              '& code': {
+                backgroundColor: 'action.hover',
+                px: 0.5,
+                py: 0.25,
+                borderRadius: 0.5,
+                fontSize: 13,
+              },
+            }}
+          >
+            <Markdown>{changelogContent}</Markdown>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 }

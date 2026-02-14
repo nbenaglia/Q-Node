@@ -66,6 +66,7 @@
   },
   "widgets": {
     "block_height": "Hauteur du bloc",
+    "connected_data_peers": "pairs de données QDN connectés",
     "connected_peers": "Pairs connectés",
     "core_version": "Version du noyau",
     "minting_status": "Statut du minage",

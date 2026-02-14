@@ -64,6 +64,7 @@
   },
   "widgets": {
     "block_height": "ブロック高",
+    "connected_data_peers": "接続中のQDNデータピア",
     "connected_peers": "接続中のピア",
     "core_version": "コアバージョン",
     "minting_status": "マイニング状態",

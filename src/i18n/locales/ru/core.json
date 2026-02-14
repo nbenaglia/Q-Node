@@ -66,6 +66,7 @@
   },
   "widgets": {
     "block_height": "Высота блока",
+    "connected_data_peers": "подключённые пиры данных QDN",
     "connected_peers": "Подключённые пиры",
     "core_version": "Версия ядра",
     "minting_status": "Статус майнинга",
