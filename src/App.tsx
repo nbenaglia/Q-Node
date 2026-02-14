@@ -1682,18 +1682,19 @@ function App() {
               textDecoration: 'none',
             }}
           >
-            <span style={{ color: '#05a2e4' }}>Qortal </span>Node
-            <Typography variant="caption" sx={{ ml: 1, fontSize: 10, color: 'text.secondary' }}>
-              v{packageJson.version}
-            </Typography>
-            <Link
-              component="button"
-              variant="caption"
-              onClick={() => setChangelogOpen(true)}
-              sx={{ ml: 1, fontSize: 9, cursor: 'pointer', color: 'inherit' }}
-            >
-              CHANGELOG
-            </Link>
+            <Box sx={{ display: 'inline-flex', alignItems: 'baseline', gap: 1 }}>
+              <span>
+                <span style={{ color: '#05a2e4' }}>Qortal </span>Node
+              </span>
+              <Link
+                component="button"
+                variant="caption"
+                onClick={() => setChangelogOpen(true)}
+                sx={{ fontSize: 10, cursor: 'pointer', color: 'text.secondary' }}
+              >
+                v{packageJson.version}
+              </Link>
+            </Box>
           </Typography>
 
           <Typography
@@ -1715,15 +1716,19 @@ function App() {
               textDecoration: 'none',
             }}
           >
-            <span style={{ color: '#05a2e4' }}>Q</span>NC
-            <Link
-              component="button"
-              variant="caption"
-              onClick={() => setChangelogOpen(true)}
-              sx={{ ml: 1, fontSize: 9, cursor: 'pointer', color: 'inherit' }}
-            >
-              CHANGELOG
-            </Link>
+            <Box sx={{ display: 'inline-flex', alignItems: 'baseline', gap: 1 }}>
+              <span>
+                <span style={{ color: '#05a2e4' }}>Q</span>NC
+              </span>
+              <Link
+                component="button"
+                variant="caption"
+                onClick={() => setChangelogOpen(true)}
+                sx={{ fontSize: 10, cursor: 'pointer', color: 'text.secondary' }}
+              >
+                v{packageJson.version}
+              </Link>
+            </Box>
           </Typography>
           {isUsingGateway ? '' : nodeButtons()}
         </Toolbar>
