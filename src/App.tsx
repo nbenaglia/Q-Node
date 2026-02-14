@@ -15,6 +15,7 @@ import {
   Divider,
   Grid,
   IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -45,12 +46,16 @@ import {
   RestartAlt,
   Storage,
   Sync,
+  Close,
   SyncLock,
 } from '@mui/icons-material';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 import Slide, { SlideProps } from '@mui/material/Slide';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import changelogContent from '../CHANGELOG.md?raw';
+import Markdown from 'react-markdown';
 import appLogo from './assets/Q-Node.png';
+import packageJson from '../package.json';
 import noAvatar from './assets/noavatar.png';
 import NodeWidget from './components/NodeWidget';
 import { useTheme } from '@mui/material/styles';
@@ -220,6 +225,7 @@ function App() {
   const [mintingAccounts, setMintingAccounts] = useState<any>([]);
   const [connectedPeers, setConnectedPeers] = useState<any>([]);
   const [errorMessage, setErrorMessage] = useState(EMPTY_STRING);
+  const [changelogOpen, setChangelogOpen] = useState(false);
   const [errorSnackbar, setErrorSnackbar] = useState(false);
   const [successMessage, setSuccessMessage] = useState(EMPTY_STRING);
   const isFetchingAccounts = useRef(false);
@@ -1677,6 +1683,17 @@ function App() {
             }}
           >
             <span style={{ color: '#05a2e4' }}>Qortal </span>Node
+            <Typography variant="caption" sx={{ ml: 1, fontSize: 10, color: 'text.secondary' }}>
+              v{packageJson.version}
+            </Typography>
+            <Link
+              component="button"
+              variant="caption"
+              onClick={() => setChangelogOpen(true)}
+              sx={{ ml: 1, fontSize: 9, cursor: 'pointer', color: 'inherit' }}
+            >
+              CHANGELOG
+            </Link>
           </Typography>
 
           <Typography
@@ -1699,6 +1716,14 @@ function App() {
             }}
           >
             <span style={{ color: '#05a2e4' }}>Q</span>NC
+            <Link
+              component="button"
+              variant="caption"
+              onClick={() => setChangelogOpen(true)}
+              sx={{ ml: 1, fontSize: 9, cursor: 'pointer', color: 'inherit' }}
+            >
+              CHANGELOG
+            </Link>
           </Typography>
           {isUsingGateway ? '' : nodeButtons()}
         </Toolbar>
@@ -1846,6 +1871,56 @@ function App() {
       <Box maxWidth="xl" marginTop={2}>
         {tableDataPeers()}
       </Box>
+      <Dialog
+        open={changelogOpen}
+        onClose={() => setChangelogOpen(false)}
+        maxWidth="md"
+        fullWidth
+        slotProps={{ paper: { sx: { maxHeight: '80vh' } } }}
+      >
+        <DialogTitle sx={{ textAlign: 'center', position: 'relative' }}>
+          CHANGELOG
+          <IconButton
+            onClick={() => setChangelogOpen(false)}
+            size="small"
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: '50%',
+              transform: 'translateY(-50%)',
+            }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          <Box
+            sx={{
+              '& h1': { fontSize: '1.5rem', fontWeight: 600, mb: 2, mt: 0 },
+              '& h2': {
+                fontSize: '1.2rem',
+                fontWeight: 600,
+                mb: 1,
+                mt: 3,
+                color: 'primary.main',
+              },
+              '& h3': { fontSize: '1rem', fontWeight: 600, mb: 1, mt: 2 },
+              '& ul': { pl: 2, mb: 1 },
+              '& li': { mb: 0.5, fontSize: 14 },
+              '& p': { mb: 1, fontSize: 14 },
+              '& code': {
+                backgroundColor: 'action.hover',
+                px: 0.5,
+                py: 0.25,
+                borderRadius: 0.5,
+                fontSize: 13,
+              },
+            }}
+          >
+            <Markdown>{changelogContent}</Markdown>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 }
